@@ -8,11 +8,11 @@ public class PostCodeHTTPManager {
 
         private String baseURI = "https://api.postcodes.io/postcodes/";
         private String postCodeData;
-        public void getAndStorePostCodeData() {
+        public void getAndStorePostCodeData(String requestedPostCode) {
             try {
                 CloseableHttpClient httpClient = HttpClients.createDefault();
-                HttpGet getLatestRates = new HttpGet(baseURI+"HA72AG");
-                CloseableHttpResponse response = httpClient.execute(getLatestRates);
+                HttpGet getPostCodeData = new HttpGet(baseURI+requestedPostCode);
+                CloseableHttpResponse response = httpClient.execute(getPostCodeData);
                 postCodeData = EntityUtils.toString(response.getEntity());
             } catch (IOException e) {
                 e.printStackTrace();
