@@ -5,13 +5,15 @@ public class PostCodeInfoParser {
     JSONObject resultData;
 
     public PostCodeInfoParser() {
-        PostCodeHTTPManager postCodeHTTPManager = new PostCodeHTTPManager();
+        GetPostCodeHTTPManager getPostCodeHTTPManager = new GetPostCodeHTTPManager();
         JSONFactory jsonFactory = new JSONFactory();
-        postCodeHTTPManager.getAndStorePostCodeData("HA72AG");
-        jsonFactory.convertPostCodeDataToJSON(postCodeHTTPManager.getPostCodeData());
+        getPostCodeHTTPManager.getAndStorePostCodeData("HA72aG");
+        jsonFactory.convertPostCodeDataToJSON(getPostCodeHTTPManager.getPostCodeData());
         postCodeData = jsonFactory.getPostCodeJSON();
         if(getJSONSuccess()) {
             setResultData();
+        } else {
+            System.out.println(getJSONValueFromOriginalData("error"));
         }
     }
 
@@ -19,9 +21,6 @@ public class PostCodeInfoParser {
         return postCodeData;
     }
 
-    public void setResultData() {
-        resultData = (JSONObject) getJSONValueFromOriginalData("result");
-    }
 
     public boolean getJSONSuccess() {
         if(getJSONValueFromOriginalData("status").toString().equals("200")){
@@ -55,4 +54,7 @@ public class PostCodeInfoParser {
         return resultData.get(key);
     }
 
+    private void setResultData() {
+        resultData = (JSONObject) getJSONValueFromOriginalData("result");
+    }
 }
